@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         switcherView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "-------onclick");
                 Toast.makeText(MainActivity.this, switcherView.getCurrentItem(), Toast.LENGTH_SHORT).show();
 //                Toast.makeText(MainActivity.this, switcherView.getCurrentIndex(), Toast.LENGTH_SHORT).show();
             }
