@@ -27,7 +27,7 @@
 
 ##使用方式
 #### 1.布局文件添加
-
+``` java
       xmlns:app="http://schemas.android.com/apk/res-auto"
 
       <com.maning.library.SwitcherView
@@ -47,10 +47,10 @@
         <attr name="switcherRollingTime" format="integer"/>             //文字滚动的时间间隔
         <attr name="switcherDefaultText" format="string"/>              //默认展示的文字
       </declare-styleable>
-
+```
    
 #### 2.设置数据源
-
+``` java
         SwitcherView switcherView = (SwitcherView) findViewById(R.id.switcherView);
 
         ArrayList<String> strs = new ArrayList<>();
@@ -71,6 +71,9 @@
                 Toast.makeText(MainActivity.this, switcherView.getCurrentItem(), Toast.LENGTH_SHORT).show();
             }
         });
+```
 
 #### 3.销毁View
+``` java
         switcherView.destroySwitcher();
+``` 
