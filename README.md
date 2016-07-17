@@ -2,7 +2,7 @@
 垂直滚动的广告栏文字展示
 
 ###屏幕截图：
-![](https://github.com/maning0303/SwitcherView/raw/master/screenshots/001.gif)
+![](https://github.com/maning0303/SwitcherView/raw/master/screenshot/001.gif)
 
 ###代码展示：
       <declare-styleable name="SwitcherView">
