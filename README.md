@@ -64,10 +64,13 @@
         //开始滚动
         switcherView.startRolling();
 
-        //监听获取当前的Item
+        //监听点击事件
         switcherView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            	//获取当前的展示的值
+                Toast.makeText(MainActivity.this, switcherView.getCurrentItem(), Toast.LENGTH_SHORT).show();
+                //获取当前展示的集合的index
                 Toast.makeText(MainActivity.this, switcherView.getCurrentItem(), Toast.LENGTH_SHORT).show();
             }
         });
