@@ -31,14 +31,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
 
       <com.maning.library.SwitcherView
-          android:id="@+id/switcherView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="#ff99ff"
-          app:switcherDefaultText="默认展示的文案"
-          app:switcherRollingTime="4000"
-          app:switcherTextColor="@color/colorPrimaryDark"
-          app:switcherTextSize="16sp" />
+        android:id="@+id/switcherView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff99ff"
+        app:switcherDefaultText="默认展示的文案"
+        app:switcherRollingTime="4000"
+        app:switcherTextColor="@color/colorPrimaryDark"
+        app:switcherTextSize="@dimen/switch_text_size" />
           
       <---------------------------自定义参数介绍-------------------------------->
       <declare-styleable name="SwitcherView">
