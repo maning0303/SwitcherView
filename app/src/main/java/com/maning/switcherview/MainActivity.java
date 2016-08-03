@@ -1,5 +1,6 @@
 package com.maning.switcherview;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "------";
     private SwitcherView switcherView;
 
+    private Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +26,19 @@ public class MainActivity extends AppCompatActivity {
 
         switcherView = (SwitcherView) findViewById(R.id.switcherView);
 
-        ArrayList<String> strs = new ArrayList<>();
-        strs.add("哎呦，不错哦");
-        strs.add("你知道我是谁吗你知道我是谁吗你知道我是谁吗");
-        strs.add("哈哈哈");
-        strs.add("1111111111111");
-        switcherView.setResource(strs);
-        switcherView.startRolling();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> strs = new ArrayList<>();
+                strs.add("哎呦，不错哦");
+                strs.add("你知道我是谁吗你知道我是谁吗你知道我是谁吗");
+                strs.add("哈哈哈");
+                strs.add("1111111111111");
+                switcherView.setResource(strs);
+                switcherView.startRolling();
+            }
+        },5000);
 
         switcherView.setOnClickListener(new View.OnClickListener() {
             @Override

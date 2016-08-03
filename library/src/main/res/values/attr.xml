@@ -5,7 +5,6 @@
         <attr name="switcherTextColor" format="reference|color"/>
         <attr name="switcherTextSize" format="dimension"/>
         <attr name="switcherRollingTime" format="integer"/>
-        <attr name="switcherDefaultText" format="string"/>
     </declare-styleable>
 
 </resources>

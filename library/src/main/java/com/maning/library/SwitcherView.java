@@ -34,7 +34,6 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     private static final int defaultTextSize = 16;    //默认文字大小
     private int textColor = 0xFF000000; //默认颜色
     private int timePeriod = 3000;  //时间周期
-    private String defaultText = "";  //默认文字显示
     private boolean flag = true;
 
     private TextView tView;
@@ -57,7 +56,6 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         Log.i("----", textSize + "");
         textSize = px2sp(textSize);
         Log.i("----", textSize + "");
-        defaultText = TextUtils.isEmpty(ta.getString(R.styleable.SwitcherView_switcherDefaultText)) ? "" : ta.getString(R.styleable.SwitcherView_switcherDefaultText);
         ta.recycle();
 
         setOnTouchListener(this);
@@ -68,7 +66,6 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         tView = new TextView(getContext());
         tView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         tView.setTextColor(textColor);
-        tView.setText(defaultText);
         tView.setSingleLine();
         tView.setPadding(10, 5, 10, 5);
         tView.setEllipsize(TextUtils.TruncateAt.END);
@@ -108,7 +105,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
             this.setInAnimation(getContext(), R.anim.m_switcher_vertical_in);
             this.setOutAnimation(getContext(), R.anim.m_switcher_vertical_out);
             timer = new Timer();
-            timer.schedule(timerTask, timePeriod, timePeriod);
+            timer.schedule(timerTask, 0, timePeriod);
         }
     }
 
