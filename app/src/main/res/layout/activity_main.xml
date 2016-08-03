@@ -19,7 +19,8 @@
         app:switcherDefaultText="默认展示的文案"
         app:switcherRollingTime="4000"
         app:switcherTextColor="@color/colorPrimaryDark"
-        app:switcherTextSize="@dimen/switch_text_size" />
+        app:switcherTextSize="16sp"
+        />
 
     <TextView
         android:layout_width="wrap_content"

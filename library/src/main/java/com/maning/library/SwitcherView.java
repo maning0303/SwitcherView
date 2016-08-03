@@ -31,7 +31,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     private ArrayList<String> dataSource = new ArrayList<>();  //数据源
     private int currentIndex = 0;   //滚动的位置
     private int textSize = 0;    //文字大小
-    private static final int defaultTextSize = 14;    //默认文字大小
+    private static final int defaultTextSize = 16;    //默认文字大小
     private int textColor = 0xFF000000; //默认颜色
     private int timePeriod = 3000;  //时间周期
     private String defaultText = "";  //默认文字显示
@@ -53,8 +53,10 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwitcherView);
         textColor = ta.getColor(R.styleable.SwitcherView_switcherTextColor, textColor);
         timePeriod = ta.getInt(R.styleable.SwitcherView_switcherRollingTime, timePeriod);
-        textSize = ta.getDimensionPixelSize(R.styleable.SwitcherView_switcherTextSize,defaultTextSize);
-        Log.i("----",textSize + "");
+        textSize = ta.getDimensionPixelSize(R.styleable.SwitcherView_switcherTextSize, sp2px(defaultTextSize));
+        Log.i("----", textSize + "");
+        textSize = px2sp(textSize);
+        Log.i("----", textSize + "");
         defaultText = TextUtils.isEmpty(ta.getString(R.styleable.SwitcherView_switcherDefaultText)) ? "" : ta.getString(R.styleable.SwitcherView_switcherDefaultText);
         ta.recycle();
 
@@ -64,7 +66,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     @Override
     public View makeView() {
         tView = new TextView(getContext());
-        tView.setTextSize(textSize);
+        tView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         tView.setTextColor(textColor);
         tView.setText(defaultText);
         tView.setSingleLine();
@@ -152,4 +154,19 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         }
         return false;
     }
+
+    public int sp2px(int spVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, getResources().getDisplayMetrics());
+    }
+
+    public int dp2px(int dpVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, getResources().getDisplayMetrics());
+
+    }
+
+    public int px2sp(float pxValue) {
+        final float fontScale = getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
+    }
+
 }

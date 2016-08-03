@@ -3,5 +3,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="switch_text_size">16px</dimen>
+    <dimen name="switch_text_size">16sp</dimen>
 </resources>
