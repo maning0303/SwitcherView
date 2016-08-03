@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextSwitcher;
@@ -28,7 +30,8 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
 
     private ArrayList<String> dataSource = new ArrayList<>();  //数据源
     private int currentIndex = 0;   //滚动的位置
-    private float textSize = 16;    //默认文字大小
+    private int textSize = 0;    //文字大小
+    private static final int defaultTextSize = 14;    //默认文字大小
     private int textColor = 0xFF000000; //默认颜色
     private int timePeriod = 3000;  //时间周期
     private String defaultText = "";  //默认文字显示
@@ -50,7 +53,8 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwitcherView);
         textColor = ta.getColor(R.styleable.SwitcherView_switcherTextColor, textColor);
         timePeriod = ta.getInt(R.styleable.SwitcherView_switcherRollingTime, timePeriod);
-        textSize = ta.getDimension(R.styleable.SwitcherView_switcherTextSize, textSize);
+        textSize = ta.getDimensionPixelSize(R.styleable.SwitcherView_switcherTextSize,defaultTextSize);
+        Log.i("----",textSize + "");
         defaultText = TextUtils.isEmpty(ta.getString(R.styleable.SwitcherView_switcherDefaultText)) ? "" : ta.getString(R.styleable.SwitcherView_switcherDefaultText);
         ta.recycle();
 
