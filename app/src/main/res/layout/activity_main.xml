@@ -8,24 +8,94 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.maning.switcherview.MainActivity">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <com.maning.library.SwitcherView
         android:id="@+id/switcherView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ff99ff"
-        app:switcherRollingTime="4000"
-        app:switcherTextColor="@color/colorPrimaryDark"
-        app:switcherTextSize="16sp"
-        />
+        android:layout_height="40dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_gravity="center"
+        android:background="#fff58c"
+        app:switcherRollingTime="3000"
+        app:switcherTextColor="#2fb3f1"
+        app:switcherTextSize="14sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="啊啊啊啊啊啊"
-        android:textSize="16sp"
-        />
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnStop"
+            android:text="暂停" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnStart"
+            android:text="开始" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnUpdate"
+        android:text="修改数据源" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnNext"
+        android:text="滚动到下一个" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnAnim01"
+            android:text="动画：从上到下" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnAnim02"
+            android:text="动画：从下到上" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnAnim03"
+            android:text="动画：从左到右" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnAnim04"
+            android:text="动画：从右到左" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

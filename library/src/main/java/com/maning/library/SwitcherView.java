@@ -2,20 +2,27 @@ package com.maning.library;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Handler;
+import android.support.annotation.AnimRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by maning on 16/7/17.
@@ -26,17 +33,24 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     private static final String TAG = "--------------";
 
     private Handler handler = new Handler();
-    private Timer timer;   //计时器
-
-    private ArrayList<String> dataSource = new ArrayList<>();  //数据源
-    private int currentIndex = 0;   //滚动的位置
-    private int textSize = 0;    //文字大小
-    private static final int defaultTextSize = 16;    //默认文字大小
-    private int textColor = 0xFF000000; //默认颜色
-    private int timePeriod = 3000;  //时间周期
+    //默认文字大小
+    private static final int defaultTextSize = 14;
+    //数据源
+    private ArrayList<String> dataSource = new ArrayList<>();
+    //滚动的位置
+    private int currentIndex = 0;
+    //文字大小
+    private int textSize = defaultTextSize;
+    //默认颜色
+    private int textColor = 0xFF000000;
+    //时间周期
+    private int timePeriod = 3000;
+    //标记暂停滚动
     private boolean flag = true;
-
-    private TextView tView;
+    //滚动的View
+    private ArrayList<TextView> textViews = new ArrayList<>();
+    //定时任务
+    private ScheduledExecutorService mScheduledExecutorService;
 
 
     public SwitcherView(Context context) {
@@ -50,12 +64,14 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwitcherView);
+        //获取文字颜色
         textColor = ta.getColor(R.styleable.SwitcherView_switcherTextColor, textColor);
+        //获取延时时间
         timePeriod = ta.getInt(R.styleable.SwitcherView_switcherRollingTime, timePeriod);
+        //获取文字大小
         textSize = ta.getDimensionPixelSize(R.styleable.SwitcherView_switcherTextSize, sp2px(defaultTextSize));
-        Log.i("----", textSize + "");
         textSize = px2sp(textSize);
-        Log.i("----", textSize + "");
+
         ta.recycle();
 
         setOnTouchListener(this);
@@ -63,35 +79,55 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
 
     @Override
     public View makeView() {
-        tView = new TextView(getContext());
-        tView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
-        tView.setTextColor(textColor);
-        tView.setSingleLine();
-        tView.setPadding(10, 5, 10, 5);
-        tView.setEllipsize(TextUtils.TruncateAt.END);
-        return tView;
-    }
-
-    public void setResource(ArrayList<String> dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (flag) {
-                        updateTextSwitcher();
-                    }
-                }
-            });
+        TextView textView = new TextView(getContext());
+        textView.setGravity(Gravity.CENTER_VERTICAL);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        textView.setTextColor(textColor);
+        textView.setSingleLine();
+        textView.setEllipsize(TextUtils.TruncateAt.END);
+        if(textViews == null){
+            textViews = new ArrayList<>();
         }
-    };
+        textViews.add(textView);
+        return textView;
+    }
 
-    private void updateTextSwitcher() {
-        if (dataSource != null && dataSource.size() > 0) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (textViews != null && textViews.size() > 0) {
+            int computedWidth = resolveMeasured(widthMeasureSpec, MeasureSpec.getSize(widthMeasureSpec));
+            int computedHeight = resolveMeasured(heightMeasureSpec, dp2px(30));
+            int width = computedWidth - getPaddingLeft() - getPaddingRight();
+            int height = computedHeight- getPaddingTop() - getPaddingBottom();
+            for (int i = 0; i < textViews.size(); i++) {
+                TextView textView = textViews.get(i);
+                LayoutParams layoutParams = new LayoutParams(width, height);
+                textView.setLayoutParams(layoutParams);
+            }
+        }
+    }
+
+    private int resolveMeasured(int measureSpec, int desired) {
+        int result;
+        int specSize = MeasureSpec.getSize(measureSpec);
+        switch (MeasureSpec.getMode(measureSpec)) {
+            case MeasureSpec.UNSPECIFIED:
+                result = desired;
+                break;
+            case MeasureSpec.AT_MOST:
+                result = Math.min(specSize, desired);
+                break;
+            case MeasureSpec.EXACTLY:
+            default:
+                result = specSize;
+        }
+        return result;
+    }
+
+
+    private void updateTextSwitcher(boolean flag) {
+        if (dataSource != null && dataSource.size() > 0 && flag) {
             this.setText(dataSource.get(currentIndex++));
             if (currentIndex > dataSource.size() - 1) {
                 currentIndex = 0;
@@ -99,16 +135,113 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         }
     }
 
+    /**
+     * 设置数据源
+     *
+     * @param dataSource
+     */
+    public void setResource(ArrayList<String> dataSource) {
+        this.dataSource = dataSource;
+        currentIndex = 0;
+    }
+
+    /**
+     * 开始滚动
+     */
     public void startRolling() {
-        if (timer == null) {
+        flag = true;
+        if (mScheduledExecutorService == null) {
+
             this.setFactory(this);
-            this.setInAnimation(getContext(), R.anim.m_switcher_vertical_in);
-            this.setOutAnimation(getContext(), R.anim.m_switcher_vertical_out);
-            timer = new Timer();
-            timer.schedule(timerTask, 0, timePeriod);
+            //默认动画
+            setAnimationBottom2Top();
+
+            //定时任务
+            mScheduledExecutorService = Executors.newScheduledThreadPool(2);
+            // 循环任务，按照上一次任务的发起时间计算下一次任务的开始时间
+            mScheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateTextSwitcher(flag);
+                        }
+                    });
+                }
+            }, 0, timePeriod, TimeUnit.MILLISECONDS);
         }
     }
 
+    /**
+     * 停止滚动
+     */
+    public void stopRolling() {
+        flag = false;
+    }
+
+    /**
+     * 手动滚动到下一个
+     */
+    public void rollingToNext() {
+        updateTextSwitcher(true);
+    }
+
+    /**
+     * 设置进入的动画
+     *
+     * @param resourceID
+     */
+    public void setInAnimation(@AnimRes int resourceID) {
+        this.setInAnimation(getContext(), resourceID);
+    }
+
+    /**
+     * 设置出去的动画
+     *
+     * @param resourceID
+     */
+    public void setOutAnimation(@AnimRes int resourceID) {
+        this.setOutAnimation(getContext(), resourceID);
+    }
+
+    /**
+     * 设置默认动画-从上到下
+     */
+    public void setAnimationTop2Bottom() {
+        this.setInAnimation(getContext(), R.anim.m_switcher_top_in);
+        this.setOutAnimation(getContext(), R.anim.m_switcher_top_out);
+    }
+
+    /**
+     * 设置默认动画-从下到上
+     */
+    public void setAnimationBottom2Top() {
+        this.setInAnimation(getContext(), R.anim.m_switcher_bottom_in);
+        this.setOutAnimation(getContext(), R.anim.m_switcher_bottom_out);
+    }
+
+    /**
+     * 设置默认动画-从左到右
+     */
+    public void setAnimationLeft2Right() {
+        this.setInAnimation(getContext(), R.anim.m_switcher_left_in);
+        this.setOutAnimation(getContext(), R.anim.m_switcher_left_out);
+    }
+
+    /**
+     * 设置默认动画-从右到左
+     */
+    public void setAnimationRight2Left() {
+        this.setInAnimation(getContext(), R.anim.m_switcher_right_in);
+        this.setOutAnimation(getContext(), R.anim.m_switcher_right_out);
+    }
+
+    /**
+     * 获取当前的Item
+     *
+     * @return
+     */
     public String getCurrentItem() {
         if (dataSource != null && dataSource.size() > 0) {
             return dataSource.get(getCurrentIndex());
@@ -117,6 +250,11 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         }
     }
 
+    /**
+     * 获取当前View
+     *
+     * @return
+     */
     public int getCurrentIndex() {
         int index = currentIndex - 1;
         if (index < 0) {
@@ -125,18 +263,23 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         return index;
     }
 
+    /**
+     * 销毁View
+     */
     public void destroySwitcher() {
         handler.removeCallbacksAndMessages(null);
         handler = null;
-        if (timer != null) {
-            timer.cancel();
-            timerTask.cancel();
-            timer = null;
-            timerTask = null;
+        if (mScheduledExecutorService != null) {
+            mScheduledExecutorService.shutdown();
+            mScheduledExecutorService = null;
         }
         if (dataSource != null && dataSource.size() > 0) {
             dataSource.clear();
             dataSource = null;
+        }
+        if(textViews != null && textViews.size() > 0){
+            textViews.clear();
+            textViews = null;
         }
     }
 
@@ -152,16 +295,19 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         return false;
     }
 
-    public int sp2px(int spVal) {
+
+    //--------------------其它工具方法------------------
+
+    private int sp2px(int spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, getResources().getDisplayMetrics());
     }
 
-    public int dp2px(int dpVal) {
+    private int dp2px(int dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, getResources().getDisplayMetrics());
 
     }
 
-    public int px2sp(float pxValue) {
+    private int px2sp(float pxValue) {
         final float fontScale = getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
