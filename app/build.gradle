@@ -23,4 +23,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation project(':library')
+    //测试gradle
+//    implementation 'com.github.maning0303:SwitcherView:V1.0.5'
 }
