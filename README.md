@@ -21,7 +21,7 @@
 #### 2.在Module目录下的build.gradle中添加依赖
 ``` gradle
 	dependencies {
-	      compile 'com.github.maning0303:SwitcherView:v1.0.0'
+	      compile 'com.github.maning0303:SwitcherView:v1.0.1'
 	}
 ```
 
@@ -35,17 +35,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ff99ff"
-        app:switcherDefaultText="默认展示的文案"
-        app:switcherRollingTime="4000"
-        app:switcherTextColor="@color/colorPrimaryDark"
-        app:switcherTextSize="@dimen/switch_text_size" />
+        app:switcherRollingTime="3000"
+        app:switcherTextColor="#FF0000"
+        app:switcherTextSize="14sp" />
           
       <---------------------------自定义参数介绍-------------------------------->
       <declare-styleable name="SwitcherView">
         <attr name="switcherTextColor" format="reference|color"/>       //文字的颜色
         <attr name="switcherTextSize" format="dimension"/>              //文字的大小
         <attr name="switcherRollingTime" format="integer"/>             //文字滚动的时间间隔
-        <attr name="switcherDefaultText" format="string"/>              //默认展示的文字
       </declare-styleable>
 ```
    
@@ -54,15 +52,31 @@
         SwitcherView switcherView = (SwitcherView) findViewById(R.id.switcherView);
 
         ArrayList<String> strs = new ArrayList<>();
-        strs.add("哎呦，不错哦");
-        strs.add("你知道我是谁吗你知道我是谁吗你知道我是谁吗");
-        strs.add("哈哈哈");
-        strs.add("1111111111111");
+        strs.add("双十二购物节1");
+        strs.add("双十二购物节2");
+        strs.add("双十二购物节3");
+        strs.add("双十二购物节4");
+        strs.add("双十二购物节5");
         
-        //设置数据源
+        //设置-修改数据源
         switcherView.setResource(strs);
         //开始滚动
         switcherView.startRolling();
+        //暂停滚动
+        switcherView.stopRolling();
+        //手动滚动到下一个
+        switcherView.rollingToNext();
+
+        //设置出入动画
+        switcherView.setInAnimation(R.anim.anim_custom_in);
+        switcherView.setOutAnimation(R.anim.anim_custom_out);
+
+        //提供四个方向动画；默认从下往上
+        switcherView.setAnimationTop2Bottom();
+        switcherView.setAnimationBottom2Top();
+        switcherView.setAnimationLeft2Right();
+        switcherView.setAnimationRight2Left();
+
 
         //监听点击事件
         switcherView.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +92,12 @@
 
 #### 3.销毁View
 ``` java
+    @Override
+    protected void onDestroy() {
         switcherView.destroySwitcher();
-``` 
+        super.onDestroy();
+    }
+```
 
 ## 推荐:
 Name | Describe |
