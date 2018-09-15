@@ -97,5 +97,11 @@
 
     </LinearLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnCustomAnmi"
+        android:text="自定义以切换动画" />
+
 
 </LinearLayout>
