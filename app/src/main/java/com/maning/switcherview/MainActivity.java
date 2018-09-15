@@ -1,9 +1,7 @@
 package com.maning.switcherview;
 
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -76,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnAnim04(View view){
         switcherView.setAnimationRight2Left();
+    }
+
+    public void btnCustomAnmi(View view){
+        switcherView.setInAnimation(R.anim.anim_custom_in);
+        switcherView.setOutAnimation(R.anim.anim_custom_out);
     }
 
     @Override
