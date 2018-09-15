@@ -2,8 +2,11 @@
 [![](https://jitpack.io/v/maning0303/SwitcherView.svg)](https://jitpack.io/#maning0303/SwitcherView)
 垂直滚动的广告栏文字展示
 
+## Gif 比较慢：
+![](https://github.com/maning0303/SwitcherView/raw/master/screenshot/mn_switchview_01.gif)
+
 ## 屏幕截图：
-![](https://github.com/maning0303/SwitcherView/raw/master/screenshot/001.gif)
+![](https://github.com/maning0303/SwitcherView/raw/master/screenshot/mn_switchview_02.png)
 
 ## 如何添加
 
