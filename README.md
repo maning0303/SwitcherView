@@ -24,7 +24,7 @@
 #### 2.在Module目录下的build.gradle中添加依赖
 ``` gradle
 	dependencies {
-	      compile 'com.github.maning0303:SwitcherView:v1.0.5'
+	      compile 'com.github.maning0303:SwitcherView:V1.0.5'
 	}
 ```
 
