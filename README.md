@@ -1,5 +1,4 @@
-# SwitcherView
-[![](https://jitpack.io/v/maning0303/SwitcherView.svg)](https://jitpack.io/#maning0303/SwitcherView)
+# SwitcherView （V1.0.6）
 滚动的广告栏文字展示
 
 ## Gif 比较慢：
