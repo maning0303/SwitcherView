@@ -40,13 +40,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void btnStart(View view){
+    public void btnStart(View view) {
         switcherView.startRolling();
     }
-    public void btnStop(View view){
+
+    public void btnStop(View view) {
         switcherView.stopRolling();
     }
-    public void btnUpdate(View view){
+
+    public void btnUpdate(View view) {
         ArrayList<String> strs = new ArrayList<>();
         strs.add("双十二购物节1");
         strs.add("双十二购物节2");
@@ -56,27 +58,27 @@ public class MainActivity extends AppCompatActivity {
         switcherView.setResource(strs);
     }
 
-    public void btnNext(View view){
+    public void btnNext(View view) {
         switcherView.rollingToNext();
     }
 
-    public void btnAnim01(View view){
+    public void btnAnim01(View view) {
         switcherView.setAnimationTop2Bottom();
     }
 
-    public void btnAnim02(View view){
+    public void btnAnim02(View view) {
         switcherView.setAnimationBottom2Top();
     }
 
-    public void btnAnim03(View view){
+    public void btnAnim03(View view) {
         switcherView.setAnimationLeft2Right();
     }
 
-    public void btnAnim04(View view){
+    public void btnAnim04(View view) {
         switcherView.setAnimationRight2Left();
     }
 
-    public void btnCustomAnmi(View view){
+    public void btnCustomAnmi(View view) {
         switcherView.setInAnimation(R.anim.anim_custom_in);
         switcherView.setOutAnimation(R.anim.anim_custom_out);
     }
@@ -97,5 +99,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         switcherView.destroySwitcher();
         super.onDestroy();
+    }
+
+    public void btnUpdateTime(View view) {
+        switcherView.setTime(6 * 1000);
     }
 }

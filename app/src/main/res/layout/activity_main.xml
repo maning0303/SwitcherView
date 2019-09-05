@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <com.maning.library.SwitcherView
         android:id="@+id/switcherView"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
         android:background="#fff58c"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:switcherRollingTime="3000"
         app:switcherTextColor="#2fb3f1"
         app:switcherTextSize="14sp" />
@@ -102,6 +102,12 @@
         android:layout_height="wrap_content"
         android:onClick="btnCustomAnmi"
         android:text="自定义以切换动画" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnUpdateTime"
+        android:text="修改切换时间6000" />
 
 
 </LinearLayout>

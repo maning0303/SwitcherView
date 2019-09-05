@@ -85,7 +85,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         textView.setTextColor(textColor);
         textView.setSingleLine();
         textView.setEllipsize(TextUtils.TruncateAt.END);
-        if(textViews == null){
+        if (textViews == null) {
             textViews = new ArrayList<>();
         }
         textViews.add(textView);
@@ -99,7 +99,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
             int computedWidth = resolveMeasured(widthMeasureSpec, MeasureSpec.getSize(widthMeasureSpec));
             int computedHeight = resolveMeasured(heightMeasureSpec, dp2px(30));
             int width = computedWidth - getPaddingLeft() - getPaddingRight();
-            int height = computedHeight- getPaddingTop() - getPaddingBottom();
+            int height = computedHeight - getPaddingTop() - getPaddingBottom();
             for (int i = 0; i < textViews.size(); i++) {
                 TextView textView = textViews.get(i);
                 LayoutParams layoutParams = new LayoutParams(width, height);
@@ -136,11 +136,25 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     }
 
     /**
+     * 设置间隔时间（毫秒）
+     *
+     * @param time 毫秒
+     */
+    public void setTime(int time) {
+        this.timePeriod = time;
+        endTimer();
+        startTimer();
+    }
+
+    /**
      * 设置数据源
      *
      * @param dataSource
      */
     public void setResource(ArrayList<String> dataSource) {
+        if (dataSource == null) {
+            dataSource = new ArrayList<>();
+        }
         this.dataSource = dataSource;
         currentIndex = 0;
     }
@@ -151,11 +165,15 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     public void startRolling() {
         flag = true;
         if (mScheduledExecutorService == null) {
-
             this.setFactory(this);
             //默认动画
             setAnimationBottom2Top();
+            startTimer();
+        }
+    }
 
+    private void startTimer() {
+        if (mScheduledExecutorService == null) {
             //定时任务
             mScheduledExecutorService = Executors.newScheduledThreadPool(2);
             // 循环任务，按照上一次任务的发起时间计算下一次任务的开始时间
@@ -170,6 +188,13 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
                     });
                 }
             }, 0, timePeriod, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    private void endTimer() {
+        if (mScheduledExecutorService != null) {
+            mScheduledExecutorService.shutdown();
+            mScheduledExecutorService = null;
         }
     }
 
@@ -269,15 +294,12 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     public void destroySwitcher() {
         handler.removeCallbacksAndMessages(null);
         handler = null;
-        if (mScheduledExecutorService != null) {
-            mScheduledExecutorService.shutdown();
-            mScheduledExecutorService = null;
-        }
+        endTimer();
         if (dataSource != null && dataSource.size() > 0) {
             dataSource.clear();
             dataSource = null;
         }
-        if(textViews != null && textViews.size() > 0){
+        if (textViews != null && textViews.size() > 0) {
             textViews.clear();
             textViews = null;
         }
