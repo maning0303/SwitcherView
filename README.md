@@ -24,7 +24,9 @@
 #### 2.在Module目录下的build.gradle中添加依赖
 ``` gradle
 	dependencies {
-	      compile 'com.github.maning0303:SwitcherView:v1.0.6'
+	      //v7包，版本自定义
+	      implementation 'com.android.support:appcompat-v7:28.0.0'
+	      implementation 'com.github.maning0303:SwitcherView:v1.0.6'
 	}
 ```
 
@@ -69,8 +71,6 @@
         switcherView.stopRolling();
         //手动滚动到下一个
         switcherView.rollingToNext();
-        //修改间隔时间
-        switcherView.setTime(6*1000);
 
         //设置出入动画
         switcherView.setInAnimation(R.anim.anim_custom_in);
