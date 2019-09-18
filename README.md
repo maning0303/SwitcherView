@@ -32,7 +32,6 @@
 ##使用方式
 #### 1.布局文件添加
 ``` java
-      xmlns:app="http://schemas.android.com/apk/res-auto"
 
       <com.maning.library.SwitcherView
         android:id="@+id/switcherView"
@@ -80,6 +79,9 @@
         switcherView.setAnimationBottom2Top();
         switcherView.setAnimationLeft2Right();
         switcherView.setAnimationRight2Left();
+
+        //动态设置时间
+        switcherView.setTime(6 * 1000);
 
 
         //监听点击事件
