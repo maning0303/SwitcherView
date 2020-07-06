@@ -65,13 +65,13 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     }
 
     private void init(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SwitcherView);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MNSwitcherView);
         //获取文字颜色
-        textColor = ta.getColor(R.styleable.SwitcherView_switcherTextColor, textColor);
+        textColor = ta.getColor(R.styleable.MNSwitcherView_switcherTextColor, textColor);
         //获取延时时间
-        timePeriod = ta.getInt(R.styleable.SwitcherView_switcherRollingTime, timePeriod);
+        timePeriod = ta.getInt(R.styleable.MNSwitcherView_switcherRollingTime, timePeriod);
         //获取文字大小
-        textSize = ta.getDimensionPixelSize(R.styleable.SwitcherView_switcherTextSize, sp2px(defaultTextSize));
+        textSize = ta.getDimensionPixelSize(R.styleable.MNSwitcherView_switcherTextSize, sp2px(defaultTextSize));
         textSize = px2sp(textSize);
 
         ta.recycle();

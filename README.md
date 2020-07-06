@@ -22,6 +22,13 @@
 
 #### 2.在Module目录下的build.gradle中添加依赖
 ``` gradle
+    AndroidX版本：
+	dependencies {
+	      implementation 'androidx.appcompat:appcompat:1.1.0'
+	      implementation 'com.github.maning0303:SwitcherView:v1.0.7'
+	}
+
+	Support包：
 	dependencies {
 	      //v7包，版本自定义
 	      implementation 'com.android.support:appcompat-v7:28.0.0'
