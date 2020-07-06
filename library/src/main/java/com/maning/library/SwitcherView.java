@@ -5,16 +5,15 @@ import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.support.annotation.AnimRes;
+
+import androidx.annotation.AnimRes;
+
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -52,6 +51,9 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     //定时任务
     private ScheduledExecutorService mScheduledExecutorService;
 
+    private Paint textPaint = new Paint();
+    private int oneTextHeight;
+
 
     public SwitcherView(Context context) {
         this(context, null);
@@ -75,6 +77,10 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         ta.recycle();
 
         setOnTouchListener(this);
+
+        textPaint.setAntiAlias(true);
+        textPaint.setTextSize(sp2px(textSize));
+        oneTextHeight = getTextHeight("中文123ABC", textPaint) + dp2px(6);
     }
 
     @Override
@@ -95,17 +101,21 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int computedWidth = resolveMeasured(widthMeasureSpec, MeasureSpec.getSize(widthMeasureSpec));
+        int computedHeight = resolveMeasured(heightMeasureSpec, oneTextHeight);
+        computedHeight += getPaddingTop();
+        computedHeight += getPaddingBottom();
+        int width = computedWidth - getPaddingLeft() - getPaddingRight();
+        int height = computedHeight - getPaddingTop() - getPaddingBottom();
         if (textViews != null && textViews.size() > 0) {
-            int computedWidth = resolveMeasured(widthMeasureSpec, MeasureSpec.getSize(widthMeasureSpec));
-            int computedHeight = resolveMeasured(heightMeasureSpec, dp2px(30));
-            int width = computedWidth - getPaddingLeft() - getPaddingRight();
-            int height = computedHeight - getPaddingTop() - getPaddingBottom();
             for (int i = 0; i < textViews.size(); i++) {
                 TextView textView = textViews.get(i);
                 LayoutParams layoutParams = new LayoutParams(width, height);
                 textView.setLayoutParams(layoutParams);
             }
         }
+        setMeasuredDimension(computedWidth, computedHeight);
+
     }
 
     private int resolveMeasured(int measureSpec, int desired) {
@@ -333,5 +343,12 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
         final float fontScale = getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
+
+    public static int getTextHeight(String text, Paint textPaint) {
+        Rect bounds = new Rect();
+        textPaint.getTextBounds(text, 0, text.length(), bounds);
+        return bounds.height();
+    }
+
 
 }

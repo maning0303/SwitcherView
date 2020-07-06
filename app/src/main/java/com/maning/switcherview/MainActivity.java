@@ -1,6 +1,6 @@
 package com.maning.switcherview;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         strs.add("双十二购物节2");
         strs.add("双十二购物节3");
         strs.add("双十二购物节4");
-        strs.add("双十二购物节5");
+        strs.add("双十二购物节5双十二购物节5双十二购物节5双十二购物节5双十二购物节5双十二购物节5");
         switcherView.setResource(strs);
     }
 
