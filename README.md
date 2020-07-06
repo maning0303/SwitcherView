@@ -1,5 +1,6 @@
 # SwitcherView （V1.0.7）
 滚动的广告栏文字展示,支持AndroidX
+[![](https://jitpack.io/v/maning0303/SwitcherView.svg)](https://jitpack.io/#maning0303/SwitcherView)
 
 ## Gif 比较慢：
 ![](https://github.com/maning0303/SwitcherView/raw/master/screenshot/mn_switchview_01.gif)
@@ -28,9 +29,8 @@
 	      implementation 'com.github.maning0303:SwitcherView:v1.0.7'
 	}
 
-	Support包：
+	support包：
 	dependencies {
-	      //v7包，版本自定义
 	      implementation 'com.android.support:appcompat-v7:28.0.0'
 	      implementation 'com.github.maning0303:SwitcherView:v1.0.6'
 	}
