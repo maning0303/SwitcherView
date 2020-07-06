@@ -101,7 +101,13 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void btnUpdateTime(View view) {
+    public void btnUpdateTime01(View view) {
+        switcherView.setTime(1 * 1000);
+    }
+    public void btnUpdateTime02(View view) {
+        switcherView.setTime(3 * 1000);
+    }
+    public void btnUpdateTime03(View view) {
         switcherView.setTime(6 * 1000);
     }
 }

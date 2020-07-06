@@ -103,11 +103,33 @@
         android:onClick="btnCustomAnmi"
         android:text="自定义以切换动画" />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="btnUpdateTime"
-        android:text="修改切换时间6000" />
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnUpdateTime01"
+            android:text="修改时间1S" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnUpdateTime02"
+            android:text="修改时间3S" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="btnUpdateTime03"
+            android:text="修改时间6S" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -33,7 +33,7 @@ public class SwitcherView extends TextSwitcher implements ViewSwitcher.ViewFacto
 
     private Handler handler = new Handler();
     //默认文字大小
-    private static final int defaultTextSize = 14;
+    private int defaultTextSize = 14;
     //数据源
     private ArrayList<String> dataSource = new ArrayList<>();
     //滚动的位置
