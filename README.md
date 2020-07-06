@@ -1,5 +1,5 @@
-# SwitcherView （V1.0.6）
-滚动的广告栏文字展示
+# SwitcherView （V1.0.7）
+滚动的广告栏文字展示,支持AndroidX
 
 ## Gif 比较慢：
 ![](https://github.com/maning0303/SwitcherView/raw/master/screenshot/mn_switchview_01.gif)
@@ -50,7 +50,7 @@
         app:switcherTextSize="14sp" />
           
       <---------------------------自定义参数介绍-------------------------------->
-      <declare-styleable name="SwitcherView">
+      <declare-styleable name="MNSwitcherView">
         <attr name="switcherTextColor" format="reference|color"/>       //文字的颜色
         <attr name="switcherTextSize" format="dimension"/>              //文字的大小
         <attr name="switcherRollingTime" format="integer"/>             //文字滚动的时间间隔
